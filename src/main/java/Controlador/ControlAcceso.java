@@ -39,9 +39,9 @@ public class ControlAcceso extends HttpServlet {
                     //USUARIO NO ESTA REGISTRADO
                     response.sendRedirect("pagError.jsp");
                 } else switch (String.valueOf(usu.getPerfilUsuario())){
-                    case "1":
+                    case "2":
                     {
-                        //PERFIL 1 DE ADMINISTRADOR
+                        //PERFIL DE ADMINISTRADOR
                         HttpSession objSesion=request.getSession();
                         objSesion.setAttribute("usuario", user);
                         objSesion.setAttribute("nivel", "Administrador");
@@ -49,9 +49,9 @@ public class ControlAcceso extends HttpServlet {
                         response.sendRedirect("pagInicio.jsp");
                         break;
                     }
-                    case "2":
+                    case "1":
                     {
-                        //PERFIL 2 DE CLIENTE
+                        //PERFIL DE CLIENTE
                         HttpSession objSesion=request.getSession();
                         objSesion.setAttribute("usuario", user);
                         objSesion.setAttribute("nivel", "Cliente");
