@@ -25,7 +25,7 @@
                 <h2 align="center">Acceso al Sistema</h2>
                 <input type="text" class="form-control" name="nombreUsuario" placeholder="Nombre de Usuario" required="" autofocus=""/>
                 <input type="password" class="form-control" name="clave" placeholder="Contraseña" required=""/>
-                <button type="submit" class="btn btn-warning btn-block" name="btnAcceder">Ingresar</button>
+                <button type="submit" class="btn btn-warning btn-lg btn-block" name="btnAcceder">Ingresar</button>
             </form>
         </div>
     </body>
