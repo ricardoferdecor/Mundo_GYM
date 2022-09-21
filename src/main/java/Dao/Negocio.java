@@ -319,4 +319,270 @@ public class Negocio extends MySQLConexion {
         }
         return lc;
     }
+    
+    //CORRELATIVO DIETA
+    public String CorrelativoDieta() {
+        String id = "";
+        ResultSet rs;
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE MAX(ID_DIETA)+1"
+                    + " END AS ID_CORRELATIVO_DIETA FROM MG_DIETA";
+            PreparedStatement st = cnx.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getObject("ID_CORRELATIVO_DIETA").toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
+    
+    //CORRELATIVO TURNO
+    public String CorrelativoTurno() {
+        String id = "";
+        ResultSet rs;
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE MAX(ID_DIETA)+1"
+                    + " END AS ID_CORRELATIVO_TURNO FROM MG_DIETA_DIARIA";
+            PreparedStatement st = cnx.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getObject("ID_CORRELATIVO_TURNO").toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
+    
+    //REGISTRAR DIETA
+    public void RegistrarDieta(Dieta dieta) {
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "Insert Into MG_DIETA (ID_DIETA,NOMBRE_DIETA,ID_TIPO_DIETA,"
+                    + "ID_MG_DIETA_DIARIA)"
+                + "Values(" + dieta.getIdDieta() + ""
+                + "," + "'" + dieta.getNombreDieta() + "'"
+                + "," + "'" + dieta.getIdTipoDieta() + "'"
+                + "," + dieta.getIdGymDiaria() + ")";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            st.executeQuery();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    //CORRELATIVO INGREDIENTE
+    public String CorrelativoIngrediente() {
+        String id = "";
+        ResultSet rs;
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE MAX(ID_DETALLE_DIETA_ING)+1"
+                    + " END AS ID_CORRELATIVO_INGREDIENTE FROM MG_DETALLE_DIETA_INGREDIENTES";
+            PreparedStatement st = cnx.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getObject("ID_CORRELATIVO_INGREDIENTE").toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
+    
+    //REGISTRAR INGREDIENTE
+    public void RegistrarIngrediente(Ingredientes ingrediente) {
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "Insert Into MG_DETALLE_DIETA_INGREDIENTES (ID_DETALLE_DIETA_ING,"
+                    + "INGREDIENTES,UNIDAD_MEDIDA,CANTIDAD,ID_DIETA)"
+                + "Values(" + ingrediente.getIdIngrediente() + ""
+                + "," + "'" + ingrediente.getNombreIngrediente()+ "'"
+                + "," + "'" + ingrediente.getUnidadMedida() + "'"
+                + "," + "" + ingrediente.getCantidad() + ""
+                + "," + ingrediente.getIdDieta() + ")";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            st.executeQuery();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    //CORRELATIVO PREPARACION
+    public String CorrelativoPreparacion() {
+        String id = "";
+        ResultSet rs;
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE MAX(ID_DETALLE_DIETA_PREPARACION)+1"
+                    + " END AS ID_CORRELATIVO_PREPARACION FROM MG_DETALLE_DIETA_PREPARACION";
+            PreparedStatement st = cnx.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                id = rs.getObject("ID_CORRELATIVO_PREPARACION").toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
+    
+    //REGISTRAR PREPARACION
+    public void RegistrarPreparacion(Preparacion preparacion) {
+        Connection cnx = MySQLConexion.getConnection();
+        try {
+            String sql = "Insert Into MG_DETALLE_DIETA_PREPARACION(ID_DETALLE_DIETA_PREPARACION,"
+                    + "PREPARACION,ID_DIETA)"
+                + "Values(" + preparacion.getIdPreparacion() + ""
+                + "," + "'" + preparacion.getDescripcionPreparacion() + "'"
+                + "," + preparacion.getIdDieta() + ")";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            st.executeQuery();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    //LISTA DE TIPO DIETA 
+    public List<Dieta> ListaTipoDieta(){
+        Connection cnx=MySQLConexion.getConnection();
+        List<Dieta> lc =new ArrayList();
+        try {
+            String sql="SELECT * FROM MG_TIPO_DIETA";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                Dieta tipoDieta = new Dieta();
+                tipoDieta.setIdTipoDieta(rs.getInt("ID_TIPO_DIETA"));
+                tipoDieta.setNombreTipoDieta(rs.getString("NOMBRE_TIPO_DIETA"));
+                lc.add(tipoDieta);;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
+    
+    //LISTA DE DIETA 
+    public List<Dieta> ListaDieta(){
+        Connection cnx=MySQLConexion.getConnection();
+        List<Dieta> lc =new ArrayList();
+        try {
+            String sql="select ID_DIETA,NOMBRE_TIPO_DIETA,NOMBRE_DIETA from MG_DIETA"
+                    + " a inner join MG_TIPO_DIETA b on a.ID_TIPO_DIETA = b.ID_TIPO_DIETA";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                Dieta Dieta = new Dieta();
+                Dieta.setIdDieta(rs.getInt("ID_DIETA"));
+                Dieta.setNombreTipoDieta(rs.getString("NOMBRE_TIPO_DIETA"));
+                Dieta.setNombreDieta(rs.getString("NOMBRE_DIETA"));
+                lc.add(Dieta);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
+    
+    //LISTA DE INGREDIENTES 
+    public List<Ingredientes> ListaIngredientes(){
+        Connection cnx=MySQLConexion.getConnection();
+        List<Ingredientes> lc =new ArrayList();
+        try {
+            String sql="select a.ID_DIETA,NOMBRE_DIETA,INGREDIENTES from MG_DIETA"
+                    + " a inner join MG_DETALLE_DIETA_INGREDIENTES b\n"
+                    + "on a.ID_DIETA = b.ID_DIETA";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                Ingredientes ingredientes = new Ingredientes();
+                ingredientes.setIdDieta(rs.getInt("ID_DIETA"));
+                ingredientes.setNombreDieta(rs.getString("NOMBRE_DIETA"));
+                ingredientes.setNombreIngrediente(rs.getString("INGREDIENTES"));
+                lc.add(ingredientes);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
+    
+    //LISTA DE PREPARACION 
+    public List<Preparacion> ListaPreparacion(){
+        Connection cnx=MySQLConexion.getConnection();
+        List<Preparacion> lc =new ArrayList();
+        try {
+            String sql="select a.ID_DIETA,NOMBRE_DIETA,PREPARACION from MG_DIETA"
+                    + " a inner join MG_DETALLE_DIETA_PREPARACION b\n"
+                    + "on a.ID_DIETA = b.ID_DIETA";
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                Preparacion preparacion = new Preparacion();
+                preparacion.setIdDieta(rs.getInt("ID_DIETA"));
+                preparacion.setNombreDieta(rs.getString("NOMBRE_DIETA"));
+                preparacion.setDescripcionPreparacion(rs.getString("PREPARACION"));
+                lc.add(preparacion);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
+    
+    // LISTA DIETA PERSONAL CLIENTE
+    public List<DietaPersonal> ListaDietaPersonal(Cliente cliente){
+        Connection cnx=MySQLConexion.getConnection();
+        List<DietaPersonal> lc =new ArrayList();
+        try {
+            String sql="select b.ID_DIETA, a.NOMBRE_TIPO_DIETA,b.NOMBRE_DIETA,c.PREPARACION,convert(varchar(10),d.FECHA_INICIAL,103) as FECHA_INICIAL,convert(varchar(10),d.FECHA_FINAL,103) as FECHA_FINAL from MG_TIPO_DIETA a left join MG_DIETA b\n"
+                    + "                    on a.ID_TIPO_DIETA = b.ID_TIPO_DIETA left join MG_DETALLE_DIETA_PREPARACION c\n"
+                    + "                    on b.ID_DIETA = c.ID_DIETA left join MG_PROGRAMACION d\n"
+                    + "                    on b.ID_DIETA = d.ID_DIETA left join MG_CLIENTE e\n"
+                    + "                    on d.ID_CLIENTE = e.ID_CLIENTE\n"
+                    + "                    where e.ID_USUARIO =" + cliente.getIdUsuario();
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                DietaPersonal dietapersonal = new DietaPersonal();
+                dietapersonal.setIdDieta(rs.getInt("ID_DIETA"));
+                dietapersonal.setTipoDieta(rs.getString("NOMBRE_TIPO_DIETA"));
+                dietapersonal.setDieta(rs.getString("NOMBRE_DIETA"));
+                dietapersonal.setPreparacion(rs.getString("PREPARACION"));
+                dietapersonal.setFecha_inicial(rs.getString("FECHA_INICIAL"));
+                dietapersonal.setFecha_final(rs.getString("FECHA_FINAL"));
+                lc.add(dietapersonal);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
+        
+    // LISTA INGREDIENTES CLIENTE
+    public List<Ingredientes> ListaIngredientesIdDieta(int idDieta){
+        Connection cnx=MySQLConexion.getConnection();
+        List<Ingredientes> lc =new ArrayList();
+        try {
+            String sql="select  INGREDIENTES,UNIDAD_MEDIDA,CANTIDAD from MG_DIETA a inner join MG_DETALLE_DIETA_INGREDIENTES b\n"
+                    + "on a.ID_DIETA = b.ID_DIETA where a.ID_DIETA =" + idDieta;
+            PreparedStatement st=cnx.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while (rs.next()) {
+                Ingredientes ingredientes = new Ingredientes();
+                ingredientes.setNombreIngrediente(rs.getString("INGREDIENTES"));
+                ingredientes.setUnidadMedida(rs.getString("UNIDAD_MEDIDA"));
+                ingredientes.setCantidad(rs.getDouble("CANTIDAD"));
+                lc.add(ingredientes);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lc;
+    }
 }
