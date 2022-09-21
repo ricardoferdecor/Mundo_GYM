@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Dao.*;
 import Modelos.*;
@@ -13,8 +14,8 @@ import java.util.*;
 import javax.servlet.http.HttpSession;
 
 /**
- * Fecha:18/09/2022 
- * Versión: 1.0
+ * Fecha:21/09/2022 
+ * Versión: 1.1
  * @author ricardo
  */
 public class ControlAcceso extends HttpServlet {
