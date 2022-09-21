@@ -29,7 +29,7 @@
                     <span id="sl"></span>
                     <ul class="subs">
                         <ul>
-                            <li><a href="Controlador?id=DatosPersonal"><i class="fa fa-folder-open" aria-hidden="true"></i>  Datos Personalesa</a></li>
+                            <li><a href="Controlador?id=DatosPersonal"><i class="fa fa-folder-open" aria-hidden="true"></i>  Datos Personales</a></li>
                             <li><a href="Controlador?id=DietaPersonal"><i class="fa fa-folder-open" aria-hidden="true"></i>  Dieta</a></li>
                             <li><a href="Controlador?id=EjercicioPersonal"><i class="fa fa-folder-open" aria-hidden="true"></i>  Ejercicios</a></li>
                         </ul>
