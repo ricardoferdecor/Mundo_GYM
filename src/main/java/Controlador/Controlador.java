@@ -19,7 +19,9 @@ import Modelos.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import javax.servlet.annotation.WebServlet;
 
+@WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
 public class Controlador extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -55,10 +57,10 @@ public class Controlador extends HttpServlet {
             Cliente cliente = new Cliente();
             cliente.setIdUsuario(Integer.parseInt(IdUsuario_Login_s));
             try {
-                Negocio listaCliente_datos = new Negocio();
-                List<Cliente> listaClientedatos2 = listaCliente_datos.ListaClienteDatos(cliente);
+                Negocio objeto = new Negocio();
+                List<Cliente> listaClientedatos2 = objeto.ListaClienteDatos(cliente);
                 request.setAttribute("DatosCliente", listaClientedatos2);
-                request.getRequestDispatcher(id_pagina + ".jsp").forward(request, response);
+                request.getRequestDispatcher("DatosPersonal.jsp").forward(request, response);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

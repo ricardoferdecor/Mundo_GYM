@@ -8,6 +8,10 @@
         <servlet-name>Controlado</servlet-name>
         <servlet-class>Controlador.Controlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControlAcceso2</servlet-name>
+        <servlet-class>Controlador.ControlAcceso2</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControlAcceso</servlet-name>
         <url-pattern>/ControlAcceso</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Controlado</servlet-name>
         <url-pattern>/Controlado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlAcceso2</servlet-name>
+        <url-pattern>/ControlAcceso2</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
