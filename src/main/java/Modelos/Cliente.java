@@ -185,5 +185,15 @@ public class Cliente {
         this.Observacion = Observacion;
     }
     
-    
+    public void calObser() {
+        if (IMC < 18.5) {
+            Observacion = ("Bajo Peso");
+        } else if (IMC >= 18.5 && IMC <= 24.9) {
+            Observacion = ("Normal");
+        } else if (IMC >= 25 && IMC <= 29.9) {
+            Observacion = ("Sobrepeso");
+        } else {
+            Observacion = ("Obesidad");
+        }
+    }
 }
